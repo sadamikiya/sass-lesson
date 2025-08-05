@@ -1,0 +1,12 @@
+@mixin box-style($color) {
+  width: $box-width;
+  height: $box-height;
+  background-color: $color;
+  margin-right: $gap-main-inner-box;
+}
+
+@each $name, $color in zip($classNames, $buttonColor) {
+  .#{$name} {
+    @include box-style($color);
+  }
+}
