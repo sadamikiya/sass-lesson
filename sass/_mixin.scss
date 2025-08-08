@@ -1,12 +1,50 @@
-@mixin box-style($color) {
-  width: $box-width;
-  height: $box-height;
-  background-color: $color;
-  margin-right: $gap-main-inner-box;
+@use "variable" as v;
+@use "sass:list";
+
+@mixin box-style($width, $height) {
+  width: $width;
+  height: $height;
 }
 
-@each $name, $color in zip($classNames, $buttonColor) {
-  .#{$name} {
-    @include box-style($color);
+@mixin header-wrapper-style {
+  background-color: v.$white;
+  padding: 10px;
+}
+
+@mixin main-wrapper-style {
+  background-color: v.$white;
+  padding: 5px;
+}
+
+@mixin header-boxes-style() {
+  @include header-wrapper-style;
+
+  display: flex;
+  gap: v.$gap-header-box;
+  margin: 20px;
+
+  @each $name, $color in zip(v.$classNames, v.$buttonColor) {
+      .#{$name} {
+        @include box-style(v.$header-box-size, v.$header-box-size);
+        background-color: $color;
+      }
+    }
+  }
+
+@mixin main-boxes-style() {
+  display: flex;
+  flex-direction: column;
+  gap: v.$gap-main-box;
+  margin: 40px;
+
+  @each $name, $color in zip(v.$classNames, v.$buttonColor) {
+    .#{$name}-wrapper {
+      @include main-wrapper-style;
+
+      .#{$name} {
+        @include box-style(v.$main-box-width, v.$main-box-height);
+        background-color: $color;
+      }
+    }
   }
 }
